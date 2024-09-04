@@ -6,6 +6,7 @@ import { USER_REPOSITORY } from '../core/constants';
 
 @Module({
     controllers: [UsersController],
+    exports: [UsersService],
     providers: [
         UsersService,
         {
