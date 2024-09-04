@@ -3,6 +3,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { USER_REPOSITORY } from '../core/constants';
 import { User } from './entities/user.entity';
+import { RolesEnum } from '../core/enums/role';
 
 @Injectable()
 export class UsersService {
@@ -11,7 +12,10 @@ export class UsersService {
     ) {}
 
     async create(createUserDto: CreateUserDto) {
-        return await this.userRepository.create(createUserDto);
+        return await this.userRepository.create({
+            ...createUserDto,
+            role: RolesEnum.USER
+        });
     }
 
     async findAll() {
