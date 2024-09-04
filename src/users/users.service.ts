@@ -4,6 +4,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { USER_REPOSITORY } from '../core/constants';
 import { User } from './entities/user.entity';
 import { RolesEnum } from '../core/enums/role';
+import { QueryFindAllDto } from './dto/query-params.dto';
 
 @Injectable()
 export class UsersService {
@@ -18,7 +19,7 @@ export class UsersService {
         });
     }
 
-    async findAll() {
+    async findAll(query: QueryFindAllDto) {
         return await this.userRepository.findAll();
     }
 

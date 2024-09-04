@@ -11,6 +11,7 @@ import {
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { QueryFindAllDto } from './dto/query-params.dto';
 
 @Controller('users')
 export class UsersController {
@@ -21,12 +22,12 @@ export class UsersController {
         return await this.usersService.create(createUserDto);
     }
 
-    @Get()
-    async findAll() {
-        return await this.usersService.findAll();
+    @Get('find/all')
+    async findAll(@Query() queryParams: QueryFindAllDto) {
+        return await this.usersService.findAll(queryParams);
     }
 
-    @Get()
+    @Get('find/one')
     async findOne(@Query('name') name: string) {
         return await this.usersService.findOne(name);
     }
