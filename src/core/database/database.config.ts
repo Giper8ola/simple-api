@@ -5,26 +5,26 @@ dotenv.config();
 
 export const databaseConfig: IDatabaseConfig = {
     development: {
-        username: process.env.DB_USER,
-        password: process.env.DB_PASS,
-        database: process.env.DB_NAME_DEVELOPMENT,
-        host: process.env.DB_HOST,
-        port: process.env.DB_PORT,
-        dialect: process.env.DB_DIALECT
+        username: process.env.USER,
+        password: process.env.PASS,
+        database: process.env.NAME_DEVELOPMENT,
+        host: process.env.HOST,
+        port: process.env.PORT,
+        dialect: process.env.DIALECT
     },
     test: {
-        username: process.env.DB_USER,
-        password: process.env.DB_PASS,
-        database: process.env.DB_NAME_TEST,
-        host: process.env.DB_HOST,
-        port: process.env.DB_PORT,
-        dialect: process.env.DB_DIALECT
+        username: process.env.USER,
+        password: process.env.PASS,
+        database: process.env.NAME_TEST,
+        host: process.env.HOST,
+        port: process.env.PORT,
+        dialect: process.env.DIALECT
     },
     production: {
-        username: process.env.DB_USER,
-        password: process.env.DB_PASS,
-        database: process.env.DB_NAME_PRODUCTION,
-        host: process.env.DB_HOST,
-        dialect: process.env.DB_DIALECT
+        username: process.env.USER,
+        password: process.env.PASS,
+        database: process.env.NAME_PRODUCTION,
+        host: process.env.HOST,
+        dialect: process.env.DIALECT
     }
 };
