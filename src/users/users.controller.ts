@@ -24,16 +24,19 @@ export class UsersController {
     async create(@Body() createUserDto: CreateUserDto) {
         return await this.usersService.create(createUserDto);
     }
+
     @AuthWithRole(RolesEnum.ADMIN)
     @Get('find/all')
     async findAll(@Query() queryParams: QueryFindAllDto) {
         return await this.usersService.findAll(queryParams);
     }
+
     @AuthWithRole(RolesEnum.ADMIN)
     @Get('find/one')
-    async findOne(@Query('name') name: string) {
-        return await this.usersService.findOne(name);
+    async findOneById(@Query('id') id: number) {
+        return await this.usersService.findOneById(id);
     }
+
     @AuthWithRole(RolesEnum.USER)
     @Patch(':id')
     async update(
