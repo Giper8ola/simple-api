@@ -5,6 +5,7 @@ import { TASK_REPOSITORY } from '../core/constants';
 import { Task } from './entities/task.entity';
 
 @Module({
+    exports: [TasksService],
     controllers: [TasksController],
     providers: [
         TasksService,
