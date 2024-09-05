@@ -25,6 +25,12 @@ export class User extends Model<User> {
     password: string;
 
     @Column({
+        type: DataType.INTEGER,
+        defaultValue: 0
+    })
+    taskAmount: number;
+
+    @Column({
         type: DataType.ENUM(...Object.values(RolesEnum)),
         allowNull: false
     })
