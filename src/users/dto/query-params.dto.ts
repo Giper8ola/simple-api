@@ -1,15 +1,4 @@
-import {
-    IsEnum,
-    IsNumber,
-    IsOptional,
-    IsString,
-    Max,
-    Min
-} from 'class-validator';
-
-export enum SortOrder {
-    TASKS = 'TASKS'
-}
+import { IsNumber, IsOptional, IsString, Max, Min } from 'class-validator';
 
 export class QueryFindAllDto {
     @IsOptional()
@@ -29,6 +18,6 @@ export class QueryFindAllDto {
     sortBy?: string = 'createdAt';
 
     @IsOptional()
-    @IsEnum(SortOrder)
-    filter?: SortOrder = SortOrder.TASKS;
+    @IsString()
+    taskFilter?: string;
 }
