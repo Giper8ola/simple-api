@@ -6,7 +6,9 @@ import {
     Patch,
     Param,
     Delete,
-    Query
+    Query,
+    UseInterceptors,
+    UploadedFile
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -14,10 +16,21 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { QueryFindAllDto } from './dto/query-params.dto';
 import { AuthWithRole } from '../core/decorators/AuthWithRole.decorator';
 import { RolesEnum } from '../core/enums/role';
-
+import { FileInterceptor } from '@nestjs/platform-express';
+import type { Express } from 'express';
 @Controller('users')
 export class UsersController {
     constructor(private readonly usersService: UsersService) {}
+
+    @UseInterceptors(
+        FileInterceptor('file', {
+            dest: 'uploads'
+        })
+    )
+    @Post('upload/avatar')
+    uploadAvatar(@UploadedFile() file: Express.Multer.File) {
+        console.log(file.path);
+    }
 
     @AuthWithRole(RolesEnum.ADMIN)
     @Post('create')
