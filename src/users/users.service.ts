@@ -1,18 +1,16 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { TASK_REPOSITORY, USER_REPOSITORY } from '../core/constants';
+import { USER_REPOSITORY } from '../core/constants';
 import { User } from './entities/user.entity';
 import { RolesEnum } from '../core/enums/role';
 import { QueryFindAllDto } from './dto/query-params.dto';
-import { Task } from '../tasks/entities/task.entity';
 import { Op } from 'sequelize';
 
 @Injectable()
 export class UsersService {
     constructor(
-        @Inject(USER_REPOSITORY) private readonly userRepository: typeof User,
-        @Inject(TASK_REPOSITORY) private readonly taskRepository: typeof Task
+        @Inject(USER_REPOSITORY) private readonly userRepository: typeof User
     ) {}
 
     async create(createUserDto: CreateUserDto) {
