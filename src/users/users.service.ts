@@ -20,6 +20,21 @@ export class UsersService {
         });
     }
 
+    async createAdminIfNotExists() {
+        const admin = await this.userRepository.findOne({
+            where: { role: 'admin' }
+        });
+
+        if (!admin) {
+            await this.userRepository.create({
+                name: 'admin',
+                email: 'mail@mail.ru',
+                password: 'admin',
+                role: RolesEnum.ADMIN
+            });
+        }
+    }
+
     async findAll(query: QueryFindAllDto) {
         const {
             page = 1,
