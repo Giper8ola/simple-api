@@ -36,6 +36,12 @@ export class User extends Model<User> {
     })
     role: RolesEnum;
 
+    @Column({
+        type: DataType.STRING,
+        defaultValue: ''
+    })
+    avatar: string;
+
     @HasMany(() => Task)
     tasks: Task[];
 }

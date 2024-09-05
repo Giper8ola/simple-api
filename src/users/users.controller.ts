@@ -8,7 +8,8 @@ import {
     Delete,
     Query,
     UseInterceptors,
-    UploadedFile
+    UploadedFile,
+    Req
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -28,8 +29,13 @@ export class UsersController {
         })
     )
     @Post('upload/avatar')
-    uploadAvatar(@UploadedFile() file: Express.Multer.File) {
-        console.log(file.path);
+    async uploadAvatar(
+        @Req() req: any,
+        @UploadedFile() file: Express.Multer.File
+    ) {
+        await this.usersService.update(req.user.id, {
+            avatar: file.path
+        });
     }
 
     @AuthWithRole(RolesEnum.ADMIN)
