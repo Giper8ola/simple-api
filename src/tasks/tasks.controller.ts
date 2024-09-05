@@ -4,6 +4,7 @@ import {
     Delete,
     Get,
     Param,
+    ParseIntPipe,
     Patch,
     Post,
     Query,
@@ -15,7 +16,7 @@ import { UpdateTaskDto } from './dto/update-task.dto';
 import { QueryFindAllDto } from './dto/query-params.dto';
 import { AuthWithRole } from '../core/decorators/AuthWithRole.decorator';
 import { RolesEnum } from '../core/enums/role';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiQuery, ApiTags } from '@nestjs/swagger';
 
 @ApiBearerAuth()
 @ApiTags('tasks')
@@ -33,13 +34,24 @@ export class TasksController {
     }
 
     @AuthWithRole(RolesEnum.USER)
+    @ApiQuery({ type: QueryFindAllDto })
     @Get('find/all')
-    async findAll(@Query() queryParams: QueryFindAllDto) {
-        return await this.tasksService.findAll(queryParams);
+    async findAll(
+        @Query('page', ParseIntPipe) page = 1,
+        @Query('limit', ParseIntPipe) limit = 5,
+        @Query('sortBy') sortBy,
+        @Query('isCompleted') isCompleted
+    ) {
+        return await this.tasksService.findAll({
+            page,
+            limit,
+            sortBy,
+            isCompleted
+        });
     }
 
     @AuthWithRole(RolesEnum.USER)
-    @Patch(':id')
+    @Patch('update:id')
     async update(
         @Param('id') id: string,
         @Body() updateTaskDto: UpdateTaskDto
@@ -48,8 +60,8 @@ export class TasksController {
     }
 
     @AuthWithRole(RolesEnum.USER)
-    @Delete(':id')
-    async remove(@Param('id') id: string) {
-        return await this.tasksService.remove(+id);
+    @Delete('delete:id')
+    async remove(@Req() req: any, @Param('id') id: string) {
+        return await this.tasksService.remove(+id, req.user.id);
     }
 }

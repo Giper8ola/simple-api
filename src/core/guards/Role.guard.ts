@@ -7,25 +7,26 @@ import {
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { ROLES_KEY } from '../decorators/Role.decorator';
+import { RolesEnum } from '../enums/role';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
     constructor(private reflector: Reflector) {}
 
     canActivate(context: ExecutionContext): boolean {
-        const roles = this.reflector.get<string[]>(
-            ROLES_KEY,
-            context.getHandler()
-        );
+        const roles = this.reflector.getAllAndOverride<RolesEnum[]>(ROLES_KEY, [
+            context.getHandler(),
+            context.getClass()
+        ]);
+
         if (!roles) {
             return true;
         }
 
-        const request = context.switchToHttp().getRequest();
-        const user = request.user;
+        const { user } = context.switchToHttp().getRequest();
 
         if (!user) {
-            throw new UnauthorizedException();
+            throw new UnauthorizedException('Не авторизован');
         }
 
         const hasRole = () => roles.includes(user.role);

@@ -1,30 +1,20 @@
-import {
-    IsBoolean,
-    IsNumber,
-    IsOptional,
-    IsString,
-    Max,
-    Min
-} from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
+import { sortFindAllUserEnum } from '../../users/dto/query-params.dto';
 
 export class QueryFindAllDto {
-    @IsOptional()
-    @IsNumber()
-    @Min(1)
-    @Max(100)
-    page?: number = 1;
+    @ApiProperty({ default: 1, required: false })
+    page: number = 1;
 
-    @IsOptional()
-    @IsNumber()
-    @Min(1)
-    @Max(100)
-    limit?: number = 10;
+    @ApiProperty({ default: 5, required: false })
+    limit: number = 5;
 
-    @IsOptional()
-    @IsString()
-    sortBy?: string = 'createdAt';
+    @ApiProperty({
+        enum: sortFindAllUserEnum,
+        default: sortFindAllUserEnum.createdAtDown,
+        required: false
+    })
+    sortBy: string = sortFindAllUserEnum.createdAtDown;
 
-    @IsOptional()
-    @IsBoolean()
-    isCompleted?: boolean;
+    @ApiProperty({ type: Boolean, required: false, default: false })
+    isCompleted: boolean;
 }

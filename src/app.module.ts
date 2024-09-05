@@ -5,8 +5,6 @@ import { DatabaseModule } from './core/database/database.module';
 import { ConfigModule } from '@nestjs/config';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
-import { APP_GUARD } from '@nestjs/core';
-import { RolesGuard } from './core/guards/Role.guard';
 import { TasksModule } from './tasks/tasks.module';
 import { UsersService } from './users/users.service';
 
@@ -21,13 +19,7 @@ import { UsersService } from './users/users.service';
         TasksModule
     ],
     controllers: [AppController],
-    providers: [
-        AppService,
-        {
-            provide: APP_GUARD,
-            useClass: RolesGuard
-        }
-    ]
+    providers: [AppService]
 })
 export class AppModule implements OnModuleInit {
     constructor(private readonly userService: UsersService) {}

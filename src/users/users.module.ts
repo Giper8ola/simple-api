@@ -3,7 +3,7 @@ import { UsersService } from './users.service';
 import { UsersController } from './users.controller';
 import { User } from './entities/user.entity';
 import { USER_REPOSITORY } from '../core/constants';
-import { TasksModule } from '../tasks/tasks.module';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
     controllers: [UsersController],
@@ -15,6 +15,6 @@ import { TasksModule } from '../tasks/tasks.module';
             useValue: User
         }
     ],
-    imports: [TasksModule]
+    imports: [JwtModule]
 })
 export class UsersModule {}

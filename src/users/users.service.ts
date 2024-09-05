@@ -36,21 +36,23 @@ export class UsersService {
     }
 
     async findAll(query: QueryFindAllDto) {
-        const {
-            page = 1,
-            limit = 20,
-            sortBy = 'createdAt',
-            taskFilter = ''
-        } = query;
+        const { page = 1, limit = 5, sortBy = '', taskFilter = '' } = query;
 
         const offset = (page - 1) * limit;
 
         let whereObject = {};
         const regex = /^(>=|<=|>|<|==)\d+$/;
+        const sortRegex = /^createdAt\|(ASC|DESC)$/;
+
+        let sortedData = [];
+
+        if (sortRegex.test(sortBy)) {
+            sortedData = sortBy.split('|');
+        }
 
         if (taskFilter && regex.test(taskFilter)) {
-            const [symbol] = taskFilter.match(/\d+/g);
-            const [number] = taskFilter.match(/>=|<=|>|<|==/g);
+            const [symbol] = taskFilter.match(/>=|<=|>|<|==/g);
+            const [number] = taskFilter.match(/\d+/g);
 
             switch (symbol) {
                 case '>=':
@@ -102,10 +104,12 @@ export class UsersService {
         }
         return await this.userRepository.findAndCountAll({
             where: whereObject,
-            attributes: ['id', 'name', 'email'],
+            attributes: ['id', 'name', 'email', 'taskAmount'],
             limit: limit,
             offset: offset,
-            order: [[sortBy, 'DESC']]
+            order: sortRegex.test(sortBy)
+                ? [[sortedData[0], sortedData[1]]]
+                : []
         });
     }
 

@@ -1,12 +1,11 @@
-import { IsEnum, IsNotEmpty, IsString } from 'class-validator';
-import { RolesEnum } from '../../core/enums/role';
+import { IsNotEmpty, IsString } from 'class-validator';
 import {
     IsEmailAddress,
     IsPassword
 } from '../../core/decorators/utils/Validations';
 import { ApiProperty } from '@nestjs/swagger';
 
-export class CreateUserDto {
+export class SignupUserDto {
     @IsNotEmpty()
     @IsString()
     @ApiProperty()
@@ -21,8 +20,4 @@ export class CreateUserDto {
     @IsPassword()
     @ApiProperty()
     password: string;
-
-    @IsNotEmpty()
-    @IsEnum(RolesEnum)
-    role: RolesEnum;
 }

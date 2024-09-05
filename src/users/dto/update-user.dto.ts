@@ -4,6 +4,7 @@ import { OmitType } from '@nestjs/mapped-types';
 
 class AdditionalUserInfo {
     avatar: string;
+    taskAmount: number;
 }
 
 export class UpdateUserDto extends PartialType(

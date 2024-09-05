@@ -29,7 +29,9 @@ export class Task extends Model<Task> {
     completed: boolean;
 
     @ForeignKey(() => User)
-    @Column
+    @Column({
+        onDelete: 'CASCADE'
+    })
     userId: number;
 
     @BelongsTo(() => User)
