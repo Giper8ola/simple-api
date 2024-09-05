@@ -7,6 +7,7 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { APP_GUARD } from '@nestjs/core';
 import { RolesGuard } from './core/guards/Role.guard';
+import { TasksModule } from './tasks/tasks.module';
 
 @Module({
     imports: [
@@ -15,7 +16,8 @@ import { RolesGuard } from './core/guards/Role.guard';
             isGlobal: true
         }),
         UsersModule,
-        AuthModule
+        AuthModule,
+        TasksModule
     ],
     controllers: [AppController],
     providers: [
