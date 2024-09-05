@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, OnModuleInit } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { DatabaseModule } from './core/database/database.module';
@@ -8,6 +8,7 @@ import { AuthModule } from './auth/auth.module';
 import { APP_GUARD } from '@nestjs/core';
 import { RolesGuard } from './core/guards/Role.guard';
 import { TasksModule } from './tasks/tasks.module';
+import { UsersService } from './users/users.service';
 
 @Module({
     imports: [
@@ -28,4 +29,9 @@ import { TasksModule } from './tasks/tasks.module';
         }
     ]
 })
-export class AppModule {}
+export class AppModule implements OnModuleInit {
+    constructor(private readonly userService: UsersService) {}
+    async onModuleInit() {
+        await this.userService.createAdminIfNotExists();
+    }
+}
