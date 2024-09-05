@@ -1,5 +1,6 @@
-import { Table, Column, Model, DataType } from 'sequelize-typescript';
+import { Table, Column, Model, DataType, HasMany } from 'sequelize-typescript';
 import { RolesEnum } from '../../core/enums/role';
+import { Task } from '../../tasks/entities/task.entity';
 
 @Table
 export class User extends Model<User> {
@@ -28,4 +29,7 @@ export class User extends Model<User> {
         allowNull: false
     })
     role: RolesEnum;
+
+    @HasMany(() => Task)
+    tasks: Task[];
 }
