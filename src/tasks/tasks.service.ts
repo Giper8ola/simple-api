@@ -18,6 +18,14 @@ export class TasksService {
         return await this.taskRepository.findAll();
     }
 
+    async findAllByUserId(id: number) {
+        return await this.taskRepository.findAll({
+            where: {
+                userId: id
+            }
+        });
+    }
+
     async update(id: number, updateTaskDto: UpdateTaskDto) {
         return await this.taskRepository.update(updateTaskDto, {
             where: {
