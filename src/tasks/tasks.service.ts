@@ -31,14 +31,6 @@ export class TasksService {
         });
     }
 
-    async findAllByUserId(id: number) {
-        return await this.taskRepository.findAll({
-            where: {
-                userId: id
-            }
-        });
-    }
-
     async update(id: number, updateTaskDto: UpdateTaskDto) {
         return await this.taskRepository.update(updateTaskDto, {
             where: {

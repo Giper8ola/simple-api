@@ -19,6 +19,10 @@ import { AuthWithRole } from '../core/decorators/AuthWithRole.decorator';
 import { RolesEnum } from '../core/enums/role';
 import { FileInterceptor } from '@nestjs/platform-express';
 import type { Express } from 'express';
+import { ApiBearerAuth, ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
+import { FileUploadDto } from './dto/file-upload.dto';
+@ApiBearerAuth()
+@ApiTags('users')
 @Controller('users')
 export class UsersController {
     constructor(private readonly usersService: UsersService) {}
@@ -28,6 +32,10 @@ export class UsersController {
             dest: 'uploads'
         })
     )
+    @ApiConsumes('multipart/form-data')
+    @ApiBody({
+        type: FileUploadDto
+    })
     @Post('upload/avatar')
     async uploadAvatar(
         @Req() req: any,
