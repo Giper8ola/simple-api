@@ -6,7 +6,8 @@ import {
     Param,
     Patch,
     Post,
-    Query
+    Query,
+    Req
 } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { CreateTaskDto } from './dto/create-task.dto';
@@ -21,8 +22,11 @@ export class TasksController {
 
     @AuthWithRole(RolesEnum.USER)
     @Post('create')
-    create(@Body() createTaskDto: CreateTaskDto) {
-        return this.tasksService.create(createTaskDto);
+    create(@Req() req: any, @Body() createTaskDto: CreateTaskDto) {
+        return this.tasksService.create({
+            ...createTaskDto,
+            userId: req.user.id
+        });
     }
     @AuthWithRole(RolesEnum.USER)
     @Get('find/all')

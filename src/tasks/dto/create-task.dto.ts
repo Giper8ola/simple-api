@@ -1,5 +1,4 @@
 import { IsBoolean, IsNotEmpty, IsString } from 'class-validator';
-import { Transform } from 'class-transformer';
 
 export class CreateTaskDto {
     @IsNotEmpty()
@@ -14,8 +13,5 @@ export class CreateTaskDto {
     @IsBoolean()
     completed: boolean;
 
-    @IsNotEmpty()
-    @IsString()
-    @Transform(({ value }) => Number(value))
     userId: number;
 }
