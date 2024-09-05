@@ -1,4 +1,11 @@
-import { IsNumber, IsOptional, IsString, Max, Min } from 'class-validator';
+import {
+    IsBoolean,
+    IsNumber,
+    IsOptional,
+    IsString,
+    Max,
+    Min
+} from 'class-validator';
 
 export class QueryFindAllDto {
     @IsOptional()
@@ -18,6 +25,6 @@ export class QueryFindAllDto {
     sortBy?: string = 'createdAt';
 
     @IsOptional()
-    @IsString()
-    titleLength?: string;
+    @IsBoolean()
+    isCompleted?: boolean;
 }
