@@ -1,4 +1,10 @@
-import { PartialType } from '@nestjs/mapped-types';
+import { IntersectionType, PartialType } from '@nestjs/mapped-types';
 import { CreateTaskDto } from './create-task.dto';
 
-export class UpdateTaskDto extends PartialType(CreateTaskDto) {}
+class AdditionalTaskUpdate {
+    completed: boolean;
+}
+
+export class UpdateTaskDto extends PartialType(
+    IntersectionType(AdditionalTaskUpdate, CreateTaskDto)
+) {}
