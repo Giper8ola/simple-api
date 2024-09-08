@@ -4,7 +4,6 @@ import { AuthGuard } from '@nestjs/passport';
 import { UsersService } from './users/users.service';
 import { ApiTags } from '@nestjs/swagger';
 import { SignupUserDto } from './users/dto/signup-user.dto';
-import { RolesEnum } from './core/enums/role';
 import { LoginUserDto } from './users/dto/login-user.dto';
 
 @ApiTags('auth')
@@ -24,9 +23,6 @@ export class AppController {
 
     @Post('auth/signup')
     async signUp(@Body() signupUserDto: SignupUserDto) {
-        return await this.userService.create({
-            ...signupUserDto,
-            role: RolesEnum.USER
-        });
+        return await this.userService.create(signupUserDto);
     }
 }
